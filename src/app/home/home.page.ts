@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataService, Message } from '../services/data.service';
+import { DataService,Alcaldia  } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +7,9 @@ import { DataService, Message } from '../services/data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
+  public Alcaldias: Array<Alcaldia>
+
   constructor(private data: DataService) {}
 
   refresh(ev) {
@@ -15,8 +18,14 @@ export class HomePage {
     }, 3000);
   }
 
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  ngOnInit(): void {
+    this.getData();
+  }
+
+  getData() {
+    this.data.getData().subscribe( alcaldias => {
+      this.Alcaldias = alcaldias;
+    });
   }
 
 }
